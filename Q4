@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *next;
+};
+
+Node *head = NULL;
+
+
+void insertEnd(int x) {
+    Node *newNode = new Node;
+    newNode->data = x;
+    newNode->next = NULL;
+
+    if(head == NULL) {
+        head = newNode;
+        return;
+    }
+
+    Node *temp = head;
+    while(temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+// next ki value store karo, then curr ke next ko prev assig krdo, prev ko curr and curr ko next
+void reverseList() {
+    Node *prev = NULL;
+    Node *curr = head;
+    Node *next = NULL;
+
+    while(curr != NULL) {
+        next = curr->next;   // store next
+        curr->next = prev;   // reverse the link
+        prev = curr;         // move prev
+        curr = next;         // move curr
+    }
+
+    head = prev; 
+}
+
+
+void display() {
+    Node *temp = head;
+    cout << "List: ";
+    while(temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    int n, x;
+
+    cout << "How many nodes? ";
+    cin >> n;
+
+    cout << "Enter values:\n";
+    for(int i = 0; i < n; i++) {
+        cin >> x;
+        insertEnd(x);
+    }
+
+    cout << "Original List:\n";
+    display();
+
+    reverseList();
+
+    cout << "Reversed List:\n";
+    display();
+
+    return 0;
+}
